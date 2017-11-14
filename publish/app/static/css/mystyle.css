@@ -1,0 +1,93 @@
+.mystyle {
+width: 100%;
+margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:20px;
+}
+
+.divbox {
+box-sizing: border-box;
+margin: 0 auto;
+width: 60%;
+height: auto;
+}
+
+.myselect {
+width: 100%;
+margin-left:auto;margin-right:auto;margin-top:20px;margin-bottom:20px;
+}
+
+.mytable {
+width: 100%;
+margin-left:auto;margin-right:auto;margin-top:15px;margin-bottom:auto;
+}
+
+.mytd {
+width:100%;
+word-break:keep-all;/* 不换行 */
+white-space:nowrap;/* 不换行 */
+overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+
+.svnbox {
+box-sizing: border-box;
+margin: 0 auto;
+width: 100%;
+height: auto;
+}
+
+.loading{
+width:160px;
+height:56px;
+position: absolute;
+top:60%;
+left:33%;
+line-height:56px;
+color:#fff;
+padding-left:60px;
+font-size:15px;
+background: #000 url(/static/images/loader.gif) no-repeat 10px 50%;
+display:none;
+opacity: 0.7;
+z-index:9999;
+-moz-border-radius:20px;
+-webkit-border-radius:20px;
+border-radius:20px;
+filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+z-Index:3;
+}
+
+#hidebg {
+position:absolute;left:0px;top:0px;
+background-color:#000;
+width:100%;  /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
+filter:alpha(opacity=60);  /*设置透明度为60%*/
+opacity:0.6;  /*非IE浏览器下设置透明度为60%*/
+display:none; /* http://www.jb51.net */
+z-Index:2;
+}
+
+
+.stop {
+border: 1px solid #dcbe00;
+padding: 1px 5px 0;
+background: #ffde10;
+color: #fff;
+}
+
+.run {
+border: 1px solid #449d44;
+padding: 1px 5px 0;
+background: #5cb85c;
+color: #fff;
+}
+
+.unknow {
+border: 1px solid #c9302c;
+padding: 1px 5px 0;
+background: #d9534f;
+color: #fff;
+}
+
+.tdmiddle {
+vertical-align:middle; 
+}

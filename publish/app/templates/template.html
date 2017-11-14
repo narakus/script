@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+  <!--h1>模板配置</h1-->
+<div class="divbox">  
+    <form action="/addtemp/" method="POST">
+      <div class="form-group mystyle">
+          <label for="templatename">Template Name</label>
+          {{ data.tempname }}
+      </div>
+      <div class="form-group mystyle">
+          <label for="path">Path</label>
+          {{ data.applypath }}
+      </div>
+      <div class="form-group mystyle">
+          <label for="log">logpath</label>
+          {{ data.logpath }}
+      </div>
+      <div class="form-group mystyle">
+          <label for="ipaddres">Ip Addres</label>
+          {{ data.ipaddr }}
+      </div>
+      <div class="form-group mystyle">
+          <label for="path">Run Command</label>
+          {{ data.runcommand }}
+      </div>
+
+        <div style="float:right;">
+          <div class="form-group myselect">
+          {{ data.projectselect }}
+      </div>
+    </div>
+
+        <div style="margin-top:20px; float:right; clear:both;">
+      <div class="form-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+  </form>
+	
+</div><!--enddivbox-->
+{% endblock %}

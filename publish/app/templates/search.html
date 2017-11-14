@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table  table-condensed table-hover mytable" style="font-size:14px;" id="search1">
+              <thead>
+                <tr>
+                  <th>项目名称</th>
+                  <th>类型</th>
+                  <th>执行状态</th>
+                  <th>项目名称</th>
+                  <th>完成时间</th>
+                  <th style="display:none">操作人员</th>
+                  <th style="display:none">模板</th>
+                  <th style="display:none">用户输入svn地址</th>
+                  <th style="display:none">任务id</th>
+                  <th>更多</th>
+                  <th>回滚</th>
+                </tr>
+              </thead>
+              <tbody id="tcontent">
+                {% for item in data %}
+                <tr>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.choicetype }}</td>
+                  <td>{{ item.applystatus }}</td>
+                  <td>{{ item.userproject_id }}</td>
+                  <td>{{ item.applytime | date:"Y-m-d H:i:s" }}</td>
+                  <td style="display:none">{{ item.applyuser_id }}</td>
+                  <td style="display:none">{{ item.usertemp_id }}</td>
+                  <td style="display:none">{{ item.inputurl }}</td>
+                  <td style="display:none">{{ item.taskid }}</td>
+                  <td><button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#searchmodal" id="searchbtn" onclick="showsearch(this)"  >more</button></td>
+                  <td><button type="button" class="btn btn-sm btn-info"  data-toggle="modal" data-target="#rollmodal" onclick="backfunc(this)" > 回滚 </button></td>
+                </tr>
+               {% endfor%}
+              </tbody>
+            </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="searchmodal" tabindex="-1" role="dialog" aria-labelledby="searchlabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="searchlabel">详细信息</h4>
+      </div>
+      <div class="modal-body" id="searchcon">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--button type="button" class="btn btn-primary">Save changes</button-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="loading" class="loading">Runing</div> 
+
+
+<script type=text/javascript>
+
+
+var all_tr = document.getElementsByTagName('tr');
+for(var i=0;i < all_tr.length - 1 ;i++){
+	var single = all_tr[i];
+	var exec_status = single.cells[2].innerHTML
+	if(exec_status == "未执行"){
+		var mytd = single.cells[10];
+		var mychild = mytd.children[0];
+		mychild.setAttribute("class","disabled btn btn-sm btn-info");
+	}
+}
+
+
+function showsearch(myval){
+    var searchcell = myval.parentElement.parentElement.cells;
+    var name = searchcell[0].innerHTML;
+    var choicetype = searchcell[1].innerHTML;
+    var applystatus = searchcell[2].innerHTML;
+    var userprojecj = searchcell[3].innerHTML;
+    var applytime = searchcell[4].innerHTML;
+    var user = searchcell[5].innerHTML;
+    var usetemp = searchcell[6].innerHTML;
+    var inputurl = searchcell[7].innerHTML;
+    var tid = searchcell[8].innerHTML;
+
+    var searchstr = "<div>名称：" + name + "<br>" + "类型：" + choicetype + "<br>" + "状态：" + applystatus + "<br>" + "项目名称：" + userprojecj  + "<br> " + "执行时间：" + applytime + "<br>" + "用户：" + user + "<br>" + "使用模板：" + usetemp + "<br>" + "用户输入svn：" + inputurl + "<br>" + "任务ID：" + tid + "<br>"  + "</div>"
+
+    var searchcon = document.getElementById('searchcon');
+    searchcon.innerHTML = searchstr;
+
+}
+
+function backfunc(myobj){
+	var rollcell = myobj.parentElement.parentElement.cells;
+	var tid = rollcell[8].innerHTML;
+
+    var hideobj=document.getElementById("hidebg");
+    hidebg.style.display="block";  //显示隐藏层
+    hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度
+    document.getElementById("loading").style.display="block";  //显示弹出层
+
+	console.log(tid);
+	$.ajax({
+		url:'/rollback/',
+		type:'POST',
+		data:{'taskid':tid},
+		success:function(callback){
+		callback = jQuery.parseJSON(callback);
+		var status = callback.status;
+		console.log(callback);
+		document.getElementById("hidebg").style.display="none";
+		document.getElementById("loading").style.display="none";
+		alert("回退完成");
+		},
+		error:function(){
+		console.log("failed")
+		}
+})
+
+}
+
+
+
+</script>
+{% endblock %}

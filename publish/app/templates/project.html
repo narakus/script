@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table  table-condensed table-hover mytable" style="font-size:14px;" id="t1">
+              <thead>
+                <tr>
+                  <th>模板名称</th>
+                  <th>应用服务器</th>
+                  <th>应用路径</th>
+                  <th style="display:none">执行命令</th>
+                  <th>项目名称</th>
+                  <th style="display:none">日志路径</th>
+                  <th>创建时间</th>
+                  <th>...</th>
+                </tr>
+              </thead>
+              <tbody id="tcontent">
+                {% for item in data %}
+                <tr>
+                  <td>{{ item.templatename }}</td>
+                  <td>{{ item.applyipaddr }}</td>
+                  <td>{{ item.applypath }}</td>
+                  <td style="display:none">{{ item.runcommand }}</td>
+                  <td>{{ item.projectname_id }}</td>
+                  <td style="display:none">{{ item.logpath }}</td>
+                  <td>{{ item.create_at | date:"Y-m-d H:i:s"}}</td>
+                  <td><button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#mymore" id="morebtn" onclick="showmore(this)" >more</button></td>
+                </tr>
+               {% endfor%}
+              </tbody>
+            </table>
+
+<!-- Modal -->
+<div class="modal fade" id="mymore" tabindex="-1" role="dialog" aria-labelledby="morelabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="morelabel">详细信息</h4>
+      </div>
+      <div class="modal-body" id="morecon">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--button type="button" class="btn btn-primary">Save changes</button-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type=text/javascript>
+function showmore(val){
+    //var morebtn = document.getElementById('morebtn');
+    var mycell = val.parentElement.parentElement.cells;
+    var tempname = mycell[0].innerHTML;
+    var address = mycell[1].innerHTML;
+    var apppath = mycell[2].innerHTML;
+    var appcommand = mycell[3].innerHTML;
+    var projectname = mycell[4].innerHTML;
+    var logpath = mycell[5].innerHTML;
+    var create = mycell[6].innerHTML;
+
+    var bigstr = "<div>模板名称：" + tempname + "<br>" + "应用地址：" + address + "<br>" + "部署路径：" + apppath + "<br>" + "执行命令：" + appcommand  + "<br> " + "项>目名称：" + projectname + "<br>" + "日志路径：" + logpath + "<br>" + "创建时间：" + create + "<br>" + "</div>"
+
+    var morecon = document.getElementById('morecon');
+    morecon.innerHTML = bigstr;
+
+}
+
+
+
+</script>
+
+
+{% endblock %}
