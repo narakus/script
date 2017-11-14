@@ -1,9 +1,0 @@
-/data/logs/ZeasnTom/ZeasnTom.log {
-    daily
-    rotate 7
-    missingok
-    notifempty
-    copytruncate
-    compress
-    sharedscripts
-}
