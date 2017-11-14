@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block content %}
+<!--h1 class="sub-header">Select Files</h1-->
+<div class="svnbox">
+    <div class="table-responsive">
+        <!--table class="table table-striped mytable" id="content" style="font-size:14px;" -->
+        <table class="table table-striped mytable" id="content">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th style="display:none">svn路径</th>
+            <th>FileName</th>
+            <th>Ipaddres</th>
+            <th>上传人</th>
+            <th style="display:none">提交大小</th>
+            <th>上传时间</th>
+            <th style="display:none">版本号</th>
+            <th style="display:none">服务器路径</th>
+            <th style="display:none">执行操作</th> <!-- 0：替换，1：添加-->
+            <!--th>操作</th-->
+            <th>more</th>
+            </tr>
+        </thead>
+        <tbody id="tcontent">
+            {% for key,value in data.items %}
+                            {% for k,v in value.items  %}
+            <tr>
+                <td><input name="c1" type="checkbox" value=0 checked="checked" /></td>
+                <td style="display:none">{{ v.svnpath }}</td>
+                <td>{{ v.filename }}</td>
+                <td>{{ key }}</td>
+                <td>{{ v.author }}</td>
+                <td style="display:none">{{ v.commit_size }}</td>
+                <td>{{ v.upload_time }}</td>
+                <td style="display:none">{{ v.commit_revision }}</td>
+                <td style="display:none">{{ v.server_path }}</td>
+                <td id="status" style="display:none">{{ v.status }}</td>
+                <!--td>{{ value.exec }}</td-->
+                <td><a id="a1" target="_blank" >view</a></td>
+            </tr>
+                            {% endfor %}
+            {% endfor%}
+        </tbody>
+        </table>
+    </div>
+
+    <!--div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+          60%
+      </div>
+    </div-->
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="processbar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+          0%
+      </div>
+    </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+    <div style="margin-top:20px; float:right;">
+    <div class="btn-group" role="group">
+    <button type="button" class="btn btn-primary btn-success"  data-toggle="modal" data-target="#processbar" onclick=trandata(); id="b1" style="margin-right: 100%;">更新</button>
+    </div>
+    </div>
+	<script type="text/javascript"> 
+
+var mytd = document.getElementsByTagName('td');
+for(var i=0;i<=mytd.length -1;i++){
+var item = mytd[i];
+if(item.getAttribute('id') == 'status'){
+var p = item.parentElement;
+if(item.innerHTML == 0){
+p.setAttribute("class","active");
+}
+else if(item.innerHTML == 1){
+p.setAttribute("class","warning");
+}
+
+else if(item.innerHTML == 2){
+p.setAttribute("class","danger");
+
+}
+}
+}
+
+var taskid = {{ taskid }}
+
+function trandata(){
+                var l1 = document.getElementsByName('c1');
+                var arr = new Array();
+                var alldate = {};
+				alldate['taskid'] = taskid
+                for (var i = 0;i <= l1.length - 1; i++) {
+                        var s = l1[i];
+                        if(s.checked){
+                                var svnpath = s.parentElement.parentElement.cells[1].innerHTML;
+                                var filename = s.parentElement.parentElement.cells[2].innerHTML;
+                                var ip = s.parentElement.parentElement.cells[3].innerHTML;
+                                var uploader = s.parentElement.parentElement.cells[4].innerHTML;
+                                var size = s.parentElement.parentElement.cells[5].innerHTML;
+                                var uploadtime = s.parentElement.parentElement.cells[6].innerHTML;
+                                var version = s.parentElement.parentElement.cells[7].innerHTML;
+                                var serverpath = s.parentElement.parentElement.cells[8].innerHTML;
+                                var stat = s.parentElement.parentElement.cells[9].innerHTML;
+                                var k = ip + '___' + filename
+                                var m = {"filename":filename,"ip":ip,"serverpath":serverpath,"svnpath":svnpath,"uploader":uploader,"size":size,"uploadtime":uploadtime,"version":version,"stat":stat};
+
+                               alldate[k] = m;
+                               console.log(alldate)
+                        }
+   ;}
+
+               $.ajax({
+                       url:'/server/',
+                       type:'POST',
+                       data:alldate,
+                       success:function(callback){
+                           console.log(callback);
+                       },
+                       error:function(){
+                           console.log('failed');
+                       }
+               })
+        }
+
+	</script>
+	<!--script src="/static/js/svn.js" ></script-->
+</div> <!--end svnbox-->
+
+{% endblock %}

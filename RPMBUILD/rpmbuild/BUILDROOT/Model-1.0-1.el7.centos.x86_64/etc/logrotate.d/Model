@@ -1,0 +1,9 @@
+/data/logs/Model/Model.log {
+    daily
+    rotate 7
+    missingok
+    notifempty
+    copytruncate
+    compress
+    sharedscripts
+}
