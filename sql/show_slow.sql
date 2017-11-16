@@ -1,1 +1,1 @@
-SELECT ID FROM INFORMATION_SCHEMA.PROCESSLIST  WHERE COMMAND = 'Query' AND TIME > 60  AND ID != CONNECTION_ID()  AND USER != 'root'  AND COMMAND != 'Binlog Dump'  AND STATE NOT REGEXP '(slave|relay|event)';
+select id from information_schema.processlist  where command = 'query' and time > 60  and id != connection_id()  and user != 'root'  and command != 'binlog dump'  and state not regexp '(slave|relay|event)';
