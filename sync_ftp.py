@@ -23,7 +23,6 @@ def sync_ftpfiles(local,host,port,user,passwd):
         s = ftp.Connect()
         ftp.SyncLocalTree(local,2)
         ftp.Disconnect()
-       
         logging.info(ftp.sessionLog())
     except:
         logging.error(ftp.lastErrorText()) 
