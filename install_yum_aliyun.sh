@@ -3,7 +3,8 @@
 yum_path="/etc/yum.repos.d"
 aliyun="http://mirrors.aliyun.com/repo"
 
-system_info=`head -n 1 /etc/issue`
+#system_info=`head -n 1 /etc/issue`
+system_info=`head -n 1 /etc/redhat-release`
 
 case "${system_info}" in
         'CentOS release 5'*)
@@ -11,6 +12,9 @@ case "${system_info}" in
                 ;;
         'CentOS release 6'*)
                 system='centos6'
+                ;;
+        'CentOS Linux release 7'*)
+                system='centos7'
                 ;;
         'Red Hat Enterprise Linux Server release 5'*)
                 system='rhel5'
