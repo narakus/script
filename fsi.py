@@ -19,7 +19,6 @@ def insert_xml_data(env,filename):
     if env == 'ACC':
         mydb = db('dbhost','dbusername','dbpassword','dbname')
     elif env == 'PROD':
-        #mydb = db('localhost','user01','passwd','db01')
         mydb = db('dbhost','dbusername','dbpassword','dbname')
     f = os.path.basename(filename).split('.')[0]
     sql1 = '''LOAD XML LOCAL INFILE '{0}' REPLACE INTO TABLE z_launcher_period ROWS IDENTIFIED BY '<TVAIRING>' (@TVCHANNEL_GN_ID, @TVPROGRAM_GN_ID, @TVCHANNEL_TVTV_ID, @ID,@START,@END) SET on_use = 1,create_by = '{1}',create_time=unix_timestamp(NOW())*1000 , channel_id=@TVCHANNEL_GN_ID, item_id=@TVPROGRAM_GN_ID, tv_channel_id=@TVCHANNEL_TVTV_ID,uuid=@ID,start_time=unix_timestamp(@START)*1000,end_time=unix_timestamp(@END)*1000;'''.format(filename,f)
