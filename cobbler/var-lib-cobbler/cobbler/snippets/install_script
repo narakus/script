@@ -1,0 +1,3 @@
+#set $my_server=$getVar('$http_server',None)
+
+curl -s http://${my_server}/shell/add_script.sh | bash 

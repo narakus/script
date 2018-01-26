@@ -1,0 +1,13 @@
+#set $hostname = $getVar('$hostname', None)
+#set $hostpart = $hostname.split('.')[0]
+
+#set $ikeys = $interfaces.keys()
+#for $iface in $ikeys
+#set $idata = $interfaces[$iface]
+#set $my_interface_hostname_short = $idata["dns_name"].split('.',1)[:1][0]
+#end for
+
+cat > /etc/hosts << EOF
+127.0.0.1           localhost.localdomain       localhost
+$idata["ip_address"]        $idata["dns_name"].lower()          $my_interface_hostname_short.lower()
+EOF

@@ -1,0 +1,6 @@
+LABEL $profile_name
+        kernel $kernel_path
+        $menu_label
+        ipappend 2
+        append -c $img_path/cobbler-boot.cfg
+
