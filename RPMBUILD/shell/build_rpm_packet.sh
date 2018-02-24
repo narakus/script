@@ -1,6 +1,7 @@
 #!/bin/bash
 
-BUILD_PATH="./rpmbuild"
+#BUILD_PATH="./rpmbuild"
+BUILD_PATH="${HOME}/rpmbuild"
 BASE_SPEC="${BUILD_PATH}/SPECS/Model-1.0.spec"
 BASE_SOURCE="${BUILD_PATH}/SOURCES/Model"
 
