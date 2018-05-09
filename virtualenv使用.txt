@@ -1,0 +1,6 @@
+pip3 install virtualenv
+
+mkdir ~/workspace
+virtualenv ~/workspace
+
+source ~/workspace/bin/activate
