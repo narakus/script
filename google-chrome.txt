@@ -27,3 +27,8 @@ options.add_argument('--no-sandbox')
 
 chrome_driver_binary = driver_bin
 driver = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+
+
+参考：
+https://intoli.com/blog/running-selenium-with-headless-chrome/
+https://blog.csdn.net/zhuyiquan/article/details/79537623
