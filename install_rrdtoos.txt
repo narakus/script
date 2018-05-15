@@ -1,0 +1,7 @@
+wget 'https://oss.oetiker.ch/rrdtool/pub/rrdtool-1.7.0.tar.gz'
+tar xf rrdtool-1.7.0.tar.gz
+./configure --prefix=/usr/local
+make
+make install 
+ln -s /usr/local/lib/librrd.* /usr/lib
+ldconfig
