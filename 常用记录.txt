@@ -1,1 +1,10 @@
+CREATE DATABASE hive_110 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+grant all privileges on hive_110.* to hadoop_u@'%' identified by "MPOYNAtvHyb8";
+revoke all on *.* from dba@localhost;
+
+
 yum install yum-plugin-downloadonly
+
+etcd 使用记录：
+yum install etcd
+
