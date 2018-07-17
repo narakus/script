@@ -16,6 +16,10 @@ curl localhost:8500/v1/catalog/nodes
 dig @127.0.0.1 -p 8600 cn4.node.consul
 consul catalog nodes
 
+
+查询异常状态http接口
+curl http://localhost:8500/v1/health/state/critical
+
 server端启动
 consul agent -bootstrap-expect 2 -server -ui -data-dir /data/consul0 -node=cn1 -bind=10.8.10.100 -config-dir /etc/consul.d -enable-script-checks=true -datacenter=dc1 -client 0.0.0.0
 
@@ -73,6 +77,7 @@ curl "http://localhost:8500/v1/kv/web/key2?index=502663&wait=5s"
 [{"LockIndex":0,"Key":"web/key2","Flags":42,"Value":"dGVzdA==","CreateIndex":502663,"ModifyIndex":502663}]
 
 通过提供 ?index=,我们请求等待key值有一个比502663更大的ModifyIndex.虽然?wait=5s参数限制了这个请求最多5秒,否则返回当前的未改变的值. 这样可以有效的等待key的改变.另外,这个功能可以用于等待一组key.直到其中的某个key有修改.
+
 
 
 
