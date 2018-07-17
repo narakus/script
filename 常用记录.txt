@@ -53,6 +53,28 @@ curl -s http://localhost:8500/v1/kv/web/key1 | python -m json.tool
 删除key
  curl -X DELETE http://localhost:8500/v1/kv/web/sub?recurse
 
+修改key
+可以通过发送相同的URL并提供不同的消息体的PUT请求去修改一个Key.另外,Consul提供一个检查并设置的操作,实现原子的Key修改.通过?cas=参数加上GET中最近的ModifyIndex来达到. 例如我们想修改 “web/key1”:
+
+curl -X PUT -d 'newval' http://localhost:8500/v1/kv/web/key1?cas=502660
+true
+curl -X PUT -d 'newval' http://localhost:8500/v1/kv/web/key1?cas=502660
+false
+
+
+在这种情况下,第一次CAS 更新成功因为ModifyIndex是502660.而第二次失败是因为ModifyIndex在第一次更新后已经不是502660了 .
+
+我们也可以使用ModifyIndex来等待key值的改变.例如我们想等待key2被修改:
+
+curl "http://localhost:8500/v1/kv/web/key2"
+[{"LockIndex":0,"Key":"web/key2","Flags":42,"Value":"dGVzdA==","CreateIndex":502663,"ModifyIndex":502663}]
+
+curl "http://localhost:8500/v1/kv/web/key2?index=502663&wait=5s"
+[{"LockIndex":0,"Key":"web/key2","Flags":42,"Value":"dGVzdA==","CreateIndex":502663,"ModifyIndex":502663}]
+
+通过提供 ?index=,我们请求等待key值有一个比502663更大的ModifyIndex.虽然?wait=5s参数限制了这个请求最多5秒,否则返回当前的未改变的值. 这样可以有效的等待key的改变.另外,这个功能可以用于等待一组key.直到其中的某个key有修改.
+
+
 
 
 
