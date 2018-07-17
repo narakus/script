@@ -8,3 +8,29 @@ yum install yum-plugin-downloadonly
 etcd 使用记录：
 yum install etcd
 
+
+consul:
+
+curl localhost:8500/v1/catalog/nodes
+dig @127.0.0.1 -p 8600 cn4.node.consul
+consul catalog nodes
+
+consul agent -bootstrap-expect 2 -server -ui -data-dir /data/consul0 -node=cn1 -bind=10.8.10.100 -config-dir /etc/consul.d -enable-script-checks=true -datacenter=dc1
+
+echo '{"service": {"name": "web", "tags": ["rails"], "port": 80}}' \
+    | sudo tee /etc/consul.d/web.json 
+
+http api 调用
+curl http://localhost:8500/v1/catalog/service/web
+
+只查询健康状态的
+curl 'http://localhost:8500/v1/health/service/web?passing'
+
+通过DNS记录查找
+dig @127.0.0.1 -p 8600 web.service.consul
+dig @127.0.0.1 -p 8600 web.service.consul SRV
+
+查找web下含有railstag的服务
+dig @127.0.0.1 -p 8600 rails.web.service.consul
+
+
