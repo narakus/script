@@ -17,7 +17,7 @@ dig @127.0.0.1 -p 8600 cn4.node.consul
 consul catalog nodes
 
 server端启动
-consul agent -bootstrap-expect 2 -server -ui -data-dir /data/consul0 -node=cn1 -bind=10.8.10.100 -config-dir /etc/consul.d -enable-script-checks=true -datacenter=dc1
+consul agent -bootstrap-expect 2 -server -ui -data-dir /data/consul0 -node=cn1 -bind=10.8.10.100 -config-dir /etc/consul.d -enable-script-checks=true -datacenter=dc1 -client 0.0.0.0
 
 创建配置文件注册服务
 echo '{"service": {"name": "web", "tags": ["rails"], "port": 80}}' \
@@ -73,6 +73,24 @@ curl "http://localhost:8500/v1/kv/web/key2?index=502663&wait=5s"
 [{"LockIndex":0,"Key":"web/key2","Flags":42,"Value":"dGVzdA==","CreateIndex":502663,"ModifyIndex":502663}]
 
 通过提供 ?index=,我们请求等待key值有一个比502663更大的ModifyIndex.虽然?wait=5s参数限制了这个请求最多5秒,否则返回当前的未改变的值. 这样可以有效的等待key的改变.另外,这个功能可以用于等待一组key.直到其中的某个key有修改.
+
+
+
+HTTP API
+
+/v1/agent/checks : 返回本地agent注册的所有检查(包括配置文件和HTTP接口)
+/v1/agent/services : 返回本地agent注册的所有 服务
+/v1/agent/members : 返回agent在集群的gossip pool中看到的成员
+/v1/agent/self : 返回本地agent的配置和成员信息
+/v1/agent/join/<address> : 触发本地agent加入node
+/v1/agent/force-leave/<node>>: 强制删除node
+/v1/agent/check/register : 在本地agent增加一个检查项，使用PUT方法传输一个json格式的数据
+/v1/agent/check/deregister/<checkID> : 注销一个本地agent的检查项
+/v1/agent/check/pass/<checkID> : 设置一个本地检查项的状态为passing
+/v1/agent/check/warn/<checkID> : 设置一个本地检查项的状态为warning
+/v1/agent/check/fail/<checkID> : 设置一个本地检查项的状态为critical
+/v1/agent/service/register : 在本地agent增加一个新的服务项，使用PUT方法传输一个json格式的数据
+/v1/agent/service/deregister/<serviceID> : 注销一个本地agent的服务项
 
 
 
