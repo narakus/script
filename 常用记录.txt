@@ -11,12 +11,15 @@ yum install etcd
 
 consul:
 
+查询
 curl localhost:8500/v1/catalog/nodes
 dig @127.0.0.1 -p 8600 cn4.node.consul
 consul catalog nodes
 
+server端启动
 consul agent -bootstrap-expect 2 -server -ui -data-dir /data/consul0 -node=cn1 -bind=10.8.10.100 -config-dir /etc/consul.d -enable-script-checks=true -datacenter=dc1
 
+创建配置文件注册服务
 echo '{"service": {"name": "web", "tags": ["rails"], "port": 80}}' \
     | sudo tee /etc/consul.d/web.json 
 
@@ -35,6 +38,20 @@ dig @127.0.0.1 -p 8600 rails.web.service.consul
 
 http注册服务
 curl -X PUT -d '{"Datacenter": "dc1", "Node": "c2", "Address": "10.155.0.106", "Service": {"Service": "MAC", "tags": ["lianglian", "Mac"], "Port": 22}}' http://127.0.0.1:8500/v1/catalog/register
+
+
+上传key
+curl -X PUT -d 'test' http://localhost:8500/v1/kv/web/key1
+curl -X PUT -d 'test'  http://localhost:8500/v1/kv/web/sub/key3
+curl -X PUT -d 'test' http://localhost:8500/v1/kv/web/key2?flags=42
+
+查询所有key
+curl -s http://localhost:8500/v1/kv/web/?recurse | python -m 
+查询单个key
+curl -s http://localhost:8500/v1/kv/web/key1 | python -m json.tool
+
+删除key
+ curl -X DELETE http://localhost:8500/v1/kv/web/sub?recurse
 
 
 
