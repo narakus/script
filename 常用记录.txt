@@ -33,4 +33,9 @@ dig @127.0.0.1 -p 8600 web.service.consul SRV
 查找web下含有railstag的服务
 dig @127.0.0.1 -p 8600 rails.web.service.consul
 
+http注册服务
+curl -X PUT -d '{"Datacenter": "dc1", "Node": "c2", "Address": "10.155.0.106", "Service": {"Service": "MAC", "tags": ["lianglian", "Mac"], "Port": 22}}' http://127.0.0.1:8500/v1/catalog/register
+
+
+
 
