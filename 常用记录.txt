@@ -20,6 +20,22 @@ consul catalog nodes
 查询异常状态http接口
 curl http://localhost:8500/v1/health/state/critical
 
+查询leader
+http://localhost:8500/v1/status/leader
+
+查询事件列表
+http://localhost:8500/v1/event/list
+
+http api 调用
+curl http://localhost:8500/v1/catalog/service/web
+
+只查询健康状态的
+curl 'http://localhost:8500/v1/health/service/web?passing'
+
+查询nodes
+curl localhost:8500/v1/catalog/nodes | python -m json.tool
+
+
 server端启动
 consul agent -bootstrap-expect 2 -server -ui -data-dir /data/consul0 -node=cn1 -bind=10.8.10.100 -config-dir /etc/consul.d -enable-script-checks=true -datacenter=dc1 -client 0.0.0.0
 
@@ -27,11 +43,7 @@ consul agent -bootstrap-expect 2 -server -ui -data-dir /data/consul0 -node=cn1 -
 echo '{"service": {"name": "web", "tags": ["rails"], "port": 80}}' \
     | sudo tee /etc/consul.d/web.json 
 
-http api 调用
-curl http://localhost:8500/v1/catalog/service/web
 
-只查询健康状态的
-curl 'http://localhost:8500/v1/health/service/web?passing'
 
 通过DNS记录查找
 dig @127.0.0.1 -p 8600 web.service.consul
