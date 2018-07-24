@@ -47,6 +47,20 @@ echo '{"service": {"name": "web", "tags": ["rails"], "port": 80}}' \
 
 通过DNS记录查找
 dig @127.0.0.1 -p 8600 web.service.consul
+
+
+
+
+
+k8s note:
+virtualbox : https://www.virtualbox.org/wiki/Linux_Downloads
+kubectl : https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md#client-binaries-1
+kube-ansible : https://github.com/inwinstack/kube-ansible
+k8s-demo : ;https://github.com/acinwinstack/k8s-concept-demo
+
+
+
+
 dig @127.0.0.1 -p 8600 web.service.consul SRV
 
 查找web下含有railstag的服务
