@@ -133,6 +133,17 @@ repo_gpgcheck=1
 gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc
 
 
+解决harbar 509 问题
+chmod 644 /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem 
+cat /root/20180727/zeasn.com.crt >> /etc/pki/tls/certs/ca-bundle.crt 
+chmod 444 /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem 
+docker-compose down 
+systemctl restart docker 
+docker-compose up -d 
+docker login harbar.zeasn.com
+
+
+
 
 
 
