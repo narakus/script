@@ -1,7 +1,6 @@
 #!/bin/bash
 
 tmp_dir=/tmp/$$
-
 mkdir -p ${tmp_dir}
 sudo apt-get install build-essential tcl wget -y
 cd ${tmp_dir} && wget -c http://download.redis.io/releases/redis-4.0.8.tar.gz
