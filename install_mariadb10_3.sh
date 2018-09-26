@@ -90,5 +90,5 @@ key_buffer		= 16M
 " > /etc/mysql/my.cnf
 
 mysql_install_db --datadir=/data/mariadb/ --user=mysql
-systemctl start mariadb
+systemctl restart mariadb
 systemctl enable mariadb
