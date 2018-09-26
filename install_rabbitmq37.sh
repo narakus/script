@@ -26,7 +26,8 @@ sudo apt install unzip -y
 test -d ${tmp_dir} || mkdir -p ${tmp_dir}
 cd ${tmp_dir} && wget ${plugins} 
 unzip `basename ${plugins}`
-sudo mv rabbitmq_delayed_message_exchange-20171201-3.7.x.ez /usr/lib/rabbitmq/lib/rabbitmq_server-3.7.7/plugins/
+plugins_dir=$(find /usr/lib/rabbitmq/lib/ -type d -name "rabbitmq_server*")
+sudo mv rabbitmq_delayed_message_exchange-20171201-3.7.x.ez ${plugins_dir}/plugins/
 
 #enable plugins
 sudo rabbitmq-plugins enable rabbitmq_management
