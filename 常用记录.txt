@@ -142,7 +142,11 @@ systemctl restart docker
 docker-compose up -d 
 docker login harbar.zeasn.com
 
-
+#mysql
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('xxx');
+grant all privileges on *.* to root@"%" identified by "XXX";
+flush privileges;
+create database charset="utf8"
 
 
 
