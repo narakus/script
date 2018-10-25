@@ -4,3 +4,7 @@ mkdir ~/workspace
 virtualenv ~/workspace
 
 source ~/workspace/bin/activate
+
+
+#for python3
+virtualenv -p /usr/bin/python3.5 workspace/
