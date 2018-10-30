@@ -149,5 +149,26 @@ flush privileges;
 create database charset="utf8"
 
 
+#docker 容器导出
+docker commit a11455cced83 mysql_backup
+docker save mysql_backup > /data/mysql_backup2.tar
+
+#docker 容器导入
+docker load  < wordpress_mysql.tar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
