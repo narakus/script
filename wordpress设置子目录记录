@@ -1,0 +1,45 @@
+参考链接 ：https://jeffreyeverhart.com/2016/12/11/wordpress-nginx-proxy-server-subdomain-subdirectory/
+
+
+修改 .htaccess 文件，设置一下内容
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+
+修改 wp-config.php 文件，添加以下内容
+define('WP_HOME', 'https://www.invested.com.cn/blog');
+define('WP_SITEURL', 'https://www.invested.com.cn/blog');
+$_SERVER['REQUEST_URI'] = str_replace("/wp-admin/", "/blog/wp-admin/",  $_SERVER['REQUEST_URI']);
+
+
+nginx配置类似如下：
+
+    location /blog/wp-admin/ {
+        proxy_pass http://localhost:8081/wp-admin/;
+    }
+
+
+    location /blog/wp-content/ {
+        proxy_pass http://localhost:8081/wp-content/;
+    }
+
+    location /blog/wp-includes/ {
+        proxy_pass http://localhost:8081/wp-includes/;
+    }
+
+
+    location /blog/ {
+        proxy_pass http://localhost:8081;
+    }
+
+    location /blog/wp-login.php {
+       #include /data/config/nginx-finance-web/subconf/wordpress-whitelist.conf;
+       proxy_pass http://localhost:8081/wp-login.php;
+    }
