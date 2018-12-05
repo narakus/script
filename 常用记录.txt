@@ -159,6 +159,13 @@ docker load  < wordpress_mysql.tar
 
 
 
+#MongoDB设置密码
+use admin
+db.createUser({user:"root",pwd:"你的密码",roles:[{"role":"root","db":"admin"}]})
+
+配置文件中加入 /etc/mongod.conf
+security:
+  authorization: enabled
 
 
 
