@@ -18,4 +18,12 @@ sudo apt-get update
 
 sudo apt-get install docker-ce -y
 
+sudo gpasswd -a ${USER} docker
+
+sudo newgrp docker
+
+sudo systemctl restart docker
+
+sudo systemctl enable docker
+
 #https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1
