@@ -14,8 +14,8 @@ sudo test -d /data/app || mkdir  /data/app
 
 tar xf jdk-8u191-linux-x64.tar.gz -C /data/app/
 
-sudo echo "export JAVA_HOME=/data/app/jdk1.8.0_191
+sudo echo 'export JAVA_HOME=/data/app/jdk1.8.0_191
 export CLASSPATH=$JAVA_HOME/lib
-export PATH=$JAVA_HOME/bin:$PATH" > /etc/profile.d/java.sh
+export PATH=$JAVA_HOME/bin:$PATH' > /etc/profile.d/java.sh
 
 rm -rf ${tmp_dir}
