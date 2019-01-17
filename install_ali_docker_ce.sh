@@ -7,6 +7,21 @@ sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/li
 sudo apt-get -y update
 sudo apt-get -y install docker-ce
 
+
+sudo gpasswd -a ${USER} docker
+
+sudo newgrp docker
+
+sudo mkdir -p /data/docker
+
+sed -i -r 's/^(ExecStart=\/usr\/bin\/dockerd)(.*?)/\1\2 \-g \/data\/docker/' /lib/systemd/system/docker.service
+
+sudo systemctl restart docker
+
+sudo systemctl enable docker
+
+
+
 # 安装指定版本的Docker-CE:
 # apt-cache madison docker-ce
 #   docker-ce | 17.03.1~ce-0~ubuntu-xenial | http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages
