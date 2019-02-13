@@ -170,7 +170,21 @@ security:
 
 
 
+mongodb3.6开启认证，并创建用户
 
+在配置文件中添加一下内容
+security:
+    authorization: enabled
+    javascriptEnabled: true
+
+在mongo shell中创建
+db.createUser(
+     {
+       user:"root",
+       pwd:"Q123456!",
+       roles:[{role:"root",db:"admin"}]
+     }
+  )
 
 
 
