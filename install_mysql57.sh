@@ -2,7 +2,9 @@
 set -e
 
 tmp_dir=/tmp/$$
-mysql_deb="https://repo.mysql.com//mysql-apt-config_0.8.10-1_all.deb"
+#mysql_deb="https://repo.mysql.com//mysql-apt-config_0.8.10-1_all.deb"
+
+mysql_deb="https://repo.mysql.com//mysql-apt-config_0.8.12-1_all.deb"
 
 export DEBIAN_FRONTEND=noninteractive
 debconf-set-selections <<< 'mysql-apt-config mysql-apt-config/select-server select mysql-5.7'
