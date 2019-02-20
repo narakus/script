@@ -26,6 +26,8 @@ sudo mkdir -p /data/docker
 
 sed -i -r 's/^(ExecStart=\/usr\/bin\/dockerd)(.*?)/\1\2 \-g \/data\/docker/' /lib/systemd/system/docker.service
 
+sudo systemctl daemon-reload
+
 sudo systemctl restart docker
 
 sudo systemctl enable docker
