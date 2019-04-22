@@ -21,6 +21,7 @@ sudo test -e ${source_erlang} && rm -f ${source_erlang}
 sudo echo "deb https://dl.bintray.com/rabbitmq/debian xenial main" > ${source_rabbitmq}
 sudo apt update && apt install rabbitmq-server -y
 
+
 #install plugins
 sudo apt install unzip -y
 test -d ${tmp_dir} || mkdir -p ${tmp_dir}
@@ -40,6 +41,13 @@ sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
 
 #set started
 sudo systemctl enable rabbitmq-server
+
+mkdir -p /data/rabbitmq
+chown -R rabbitmq.rabbitmq /data/rabbitmq
+echo "RABBITMQ_MNESIA_BASE=/data/rabbitmq/mnesia" >> /etc/rabbitmq/rabbitmq-env.conf
+echo "RABBITMQ_LOG_BASE=/data/rabbitmq/log"  >> /etc/rabbitmq/rabbitmq-env.conf
+
+systemctl restart rabbitmq-server.service
 
 test -d ${tmp_dir} && rm -rf ${tmp_dir}
 
