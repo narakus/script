@@ -34,20 +34,23 @@ sudo mv rabbitmq_delayed_message_exchange-20171201-3.7.x.ez ${plugins_dir}/plugi
 sudo rabbitmq-plugins enable rabbitmq_management
 sudo rabbitmq-plugins enable rabbitmq_delayed_message_exchange
 
-#set admin passwd
-sudo rabbitmqctl add_user admin advance.ai2016
-sudo rabbitmqctl set_user_tags admin administrator
-sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
-
-#set started
-sudo systemctl enable rabbitmq-server
 
 mkdir -p /data/rabbitmq
 chown -R rabbitmq.rabbitmq /data/rabbitmq
 echo "RABBITMQ_MNESIA_BASE=/data/rabbitmq/mnesia" >> /etc/rabbitmq/rabbitmq-env.conf
 echo "RABBITMQ_LOG_BASE=/data/rabbitmq/log"  >> /etc/rabbitmq/rabbitmq-env.conf
-
 systemctl restart rabbitmq-server.service
+
+
+#set admin passwd
+sudo rabbitmqctl add_user admin advance.ai2016
+sudo rabbitmqctl set_user_tags admin administrator
+sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+systemctl restart rabbitmq-server.service
+
+#set started
+sudo systemctl enable rabbitmq-server
+
 
 test -d ${tmp_dir} && rm -rf ${tmp_dir}
 
