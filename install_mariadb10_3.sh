@@ -1,14 +1,20 @@
 #!/bin/bash
 
-export DEBIAN_FRONTEND=noninteractive
-debconf-set-selections <<< "mariadb-server-10.3 root_password password 123456"
-debconf-set-selections <<< "mariadb-server-10.3 root_password_again password 123456"
-debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password 123456"
-debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password 123456"
+#export DEBIAN_FRONTEND=noninteractive
+#debconf-set-selections <<< "mariadb-server-10.3 root_password password 123456"
+#debconf-set-selections <<< "mariadb-server-10.3 root_password_again password 123456"
+#debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password 123456"
+#debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password 123456"
 
-sudo apt-get install software-properties-common -y
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mariadb.mirror.anstey.ca/repo/10.3/ubuntu xenial main'
+#sudo apt-get install software-properties-common -y
+#sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+#sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mariadb.mirror.anstey.ca/repo/10.3/ubuntu xenial main'
+
+test -d /data || mkdir /data
+cd /data/
+wget https://downloads.mariadb.com/MariaDB/mariadb-10.3.20/repo/ubuntu/mariadb-10.3.20-ubuntu-xenial-amd64-debs.tar
+tar xf mariadb-10.3.20-ubuntu-xenial-amd64-debs.tar
+cd /data/ mariadb-10.3.20-ubuntu-xenial-amd64-debs/ && ./setup_repository
 
 sudo apt update
 sudo apt install mariadb-server -y
