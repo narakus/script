@@ -26,6 +26,15 @@ sudo mkdir -p /data/docker
 
 sed -i -r 's/^(ExecStart=\/usr\/bin\/dockerd)(.*?)/\1\2 \-g \/data\/docker/' /lib/systemd/system/docker.service
 
+test -e /etc/docker/daemon.json ||\
+echo '{
+  "bip": "172.17.0.1/24",
+  "default-address-pools":[
+    {"base":"172.17.0.1/16","size":24}
+  ]
+}'   >> /etc/docker/daemon.json
+
+
 sudo systemctl daemon-reload
 
 sudo systemctl restart docker
