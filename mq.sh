@@ -24,7 +24,7 @@ echo "deb https://packages.erlang-solutions.com/ubuntu precise contrib" | sudo t
 
 wget https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | sudo apt-key add erlang_solutions.asc
 sudo apt list --upgradable
-sudo apt update && apt install esl-erlang  -y
+sudo apt update && apt install esl-erlang=1:22.1.8-1  -y
 
 }
 
